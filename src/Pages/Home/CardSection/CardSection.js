@@ -1,10 +1,10 @@
 import React from "react";
-import logo1 from "../../../../assets/icons/clock.svg";
-import logo2 from "../../../../assets/icons/marker.svg";
-import logo3 from "../../../../assets/icons/phone.svg";
+import logo1 from "../../../assets/icons/clock.svg";
+import logo2 from "../../../assets/icons/marker.svg";
+import logo3 from "../../../assets/icons/phone.svg";
 import SingleCard from "./SingleCard";
 
-const BannerCards = () => {
+const CardSection = () => {
   // const color1
   const cards = [
     {
@@ -40,4 +40,4 @@ const BannerCards = () => {
   );
 };
 
-export default BannerCards;
+export default CardSection;

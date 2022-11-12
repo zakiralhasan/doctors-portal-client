@@ -1,13 +1,14 @@
 import React from "react";
-import BannerCards from "../BannerCards/BannerCards";
-import BannerImage from "../BannerImage/BannerImage";
+import BannerImage from "./BannerImage";
 import bannerBG from "../../../../assets/images/bg.png";
 
 const Banner = () => {
   return (
-    <div style={{ background: `url(${bannerBG})` }} className="bg-cover">
+    <div
+      style={{ background: `url(${bannerBG})` }}
+      className="bg-cover bg-center"
+    >
       <BannerImage></BannerImage>
-      <BannerCards></BannerCards>
     </div>
   );
 };

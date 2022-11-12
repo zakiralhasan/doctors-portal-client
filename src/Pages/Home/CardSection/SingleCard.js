@@ -2,7 +2,7 @@ import React from "react";
 
 const SingleCard = ({ card }) => {
   const { title, img, details, bgColor } = card;
-  console.log(card);
+
   return (
     <div>
       <div
@@ -12,8 +12,8 @@ const SingleCard = ({ card }) => {
           <img src={img} alt="Movie" />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">New movie is released!</h2>
-          <p>Click the button to watch on Jetflix app.</p>
+          <h2 className="card-title">{title}</h2>
+          <p className="text-left">{details}</p>
         </div>
       </div>
     </div>
