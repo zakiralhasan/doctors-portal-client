@@ -1,23 +1,28 @@
 import React from "react";
 
-const AppointmentsCard = ({ appointmentOption }) => {
+const AppointmentsCard = ({ appointmentOption, setTreatment }) => {
   const { name, slots } = appointmentOption;
   return (
     <div>
       <div className="py-10 border rounded-xl shadow-md ">
-        <div className="">
+        <div className=" mb-6">
           <h2 className="text-xl text-[#19D3AE] font-semibold mb-2">{name}</h2>
-
           <p className="text-sm">
             {slots.length > 0 ? slots[0] : "Try another day"}
           </p>
-          <p className="my-4 text-xs">
+          <p className="mt-2 text-xs">
             {slots.length} {slots.length > 1 ? "Spaces" : "Space"} available
           </p>
         </div>
-        <button className="bg-gradient-to-r from-[#19D3AE] to-[#0FCFEC] rounded-md text-white font-bold px-6 py-4">
+        {/* this label is used for modal open */}
+        <label
+          disabled={slots.length === 0}
+          onClick={() => setTreatment(appointmentOption)}
+          htmlFor="booking-modal"
+          className="border-none btn bg-gradient-to-r from-[#19D3AE] to-[#0FCFEC] rounded-md text-white font-bold "
+        >
           Book Appointment
-        </button>
+        </label>
       </div>
     </div>
   );
