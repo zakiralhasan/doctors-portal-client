@@ -27,7 +27,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
     <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box relative">
+        <div className="modal-box relative rounded-lg">
           <label
             htmlFor="booking-modal"
             className="btn btn-sm btn-circle absolute right-2 top-2"

@@ -5,13 +5,13 @@ const Header = () => {
   const navItems = (
     <>
       <li>
-        <Link>Home</Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
         <Link>About</Link>
       </li>
       <li>
-        <Link>Appointment</Link>
+        <Link to="/appointment">Appointment</Link>
       </li>
       <li>
         <Link>Reviews</Link>
@@ -56,7 +56,9 @@ const Header = () => {
             <ul className="menu menu-horizontal p-0">{navItems}</ul>
           </div>
           <div className="">
-            <button>Login</button>
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
           </div>
         </div>
       </div>
