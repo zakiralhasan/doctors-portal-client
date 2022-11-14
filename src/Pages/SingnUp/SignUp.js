@@ -9,6 +9,7 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const [firebaseError, setFirebaseError] = useState();
@@ -21,7 +22,7 @@ const SignUp = () => {
         const newUser = result.user;
         console.log(newUser);
         setFirebaseError("");
-        // event.target.reset()
+        reset();
       })
       .catch((error) => setFirebaseError(error.message));
   };

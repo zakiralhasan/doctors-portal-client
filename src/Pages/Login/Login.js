@@ -9,6 +9,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const [firebaseError, setFirebaseError] = useState();
@@ -21,6 +22,7 @@ const Login = () => {
         const logedUser = result.user;
         console.log(logedUser);
         setFirebaseError("");
+        reset();
       })
       .catch((error) => setFirebaseError(error.message));
   };
