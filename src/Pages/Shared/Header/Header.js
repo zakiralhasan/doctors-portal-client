@@ -1,7 +1,17 @@
 import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AutheContext } from "../../../Context/AuthProvider";
 
 const Header = () => {
+  const { user, logOutUser } = useContext(AutheContext);
+
+  const handleUserLogout = () => {
+    logOutUser()
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
+
   const navItems = (
     <>
       <li>
@@ -56,9 +66,15 @@ const Header = () => {
             <ul className="menu menu-horizontal p-0">{navItems}</ul>
           </div>
           <div className="">
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
+            {user?.uid ? (
+              <Link to="">
+                <button onClick={handleUserLogout}>Logout</button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <button>Login</button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
