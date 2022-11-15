@@ -2,8 +2,8 @@ import React from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { AutheContext } from "../../Context/AuthProvider";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const Login = () => {
   //used for react hook form
@@ -12,7 +12,12 @@ const Login = () => {
   const [firebaseError, setFirebaseError] = useState();
   //used context api
   const { user, setLoading, loginUser, loginUserWithGoogle } =
-    useContext(AutheContext);
+    useContext(AuthContext);
+
+  //used for login user redirect path issue
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   //login with email and password
   const handleForm = (data) => {
@@ -20,6 +25,7 @@ const Login = () => {
       .then((result) => {
         const logedUser = result.user;
         console.log(logedUser);
+        navigate(from, { replace: true }); //used for login user redirect path
         setFirebaseError("");
         reset();
       })

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { AutheContext } from "../../Context/AuthProvider";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const Reset = () => {
   //used for react hook form
@@ -11,7 +11,7 @@ const Reset = () => {
   //used for handle firebase error
   const [firebaseError, setFirebaseError] = useState();
   //used context api
-  const { user, setLoading, resetUserPassword } = useContext(AutheContext);
+  const { user, setLoading, resetUserPassword } = useContext(AuthContext);
 
   //login with email and password
   const handleForm = (data) => {

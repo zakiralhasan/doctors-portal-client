@@ -1,10 +1,10 @@
 import React from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AutheContext } from "../../../Context/AuthProvider";
+import { AuthContext } from "../../../Context/AuthProvider";
 
 const Header = () => {
-  const { user, logOutUser } = useContext(AutheContext);
+  const { user, logOutUser } = useContext(AuthContext);
 
   const handleUserLogout = () => {
     logOutUser()
@@ -29,6 +29,11 @@ const Header = () => {
       <li>
         <Link>Contact Us</Link>
       </li>
+      {user?.uid && (
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -67,16 +72,23 @@ const Header = () => {
           </div>
           <div className="">
             {user?.uid ? (
-              <div className="flex gap-4">
-                <button onClick={handleUserLogout}>Logout</button>
-                <div className="w-8 rounded-full ">
+              <div className="flex items-center ml-8">
+                <button
+                  onClick={handleUserLogout}
+                  className="btn-ghost px-5 py-2"
+                >
+                  Logout
+                </button>
+                <div className="w-8 rounded-full ml-2">
                   <img src={user?.photoURL} alt="" title="" />
                 </div>
               </div>
             ) : (
-              <Link to="/login">
-                <button>Login</button>
-              </Link>
+              <div className="ml-8">
+                <Link to="/login">
+                  <button className="btn-ghost px-5 py-2">Login</button>
+                </Link>
+              </div>
             )}
           </div>
         </div>

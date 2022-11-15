@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { AutheContext } from "../../Context/AuthProvider";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const SignUp = () => {
   //used for react hook form
@@ -17,7 +17,7 @@ const SignUp = () => {
   const [firebaseError, setFirebaseError] = useState();
   //used context api
   const { user, setLoading, createUser, loginUserWithGoogle } =
-    useContext(AutheContext);
+    useContext(AuthContext);
 
   //create or signup new user
   const handleForm = (data) => {

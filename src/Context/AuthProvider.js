@@ -15,7 +15,7 @@ import { createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-export const AutheContext = createContext();
+export const AuthContext = createContext();
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
@@ -64,6 +64,8 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    setUser,
+    loading,
     setLoading,
     createUser,
     loginUser,
@@ -73,7 +75,7 @@ const AuthProvider = ({ children }) => {
     resetUserPassword,
   };
   return (
-    <AutheContext.Provider value={authInfo}>{children}</AutheContext.Provider>
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
 
