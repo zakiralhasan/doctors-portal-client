@@ -5,35 +5,20 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AutheContext } from "../../Context/AuthProvider";
 
-const Login = () => {
+const Reset = () => {
   //used for react hook form
   const { register, handleSubmit, reset } = useForm();
   //used for handle firebase error
   const [firebaseError, setFirebaseError] = useState();
   //used context api
-  const { user, setLoading, loginUser, loginUserWithGoogle } =
-    useContext(AutheContext);
+  const { user, setLoading, resetUserPassword } = useContext(AutheContext);
 
   //login with email and password
   const handleForm = (data) => {
-    loginUser(data.email, data.password)
+    resetUserPassword(data.email)
       .then((result) => {
-        const logedUser = result.user;
-        console.log(logedUser);
         setFirebaseError("");
         reset();
-      })
-      .catch((error) => setFirebaseError(error.message))
-      .finally(() => setLoading(false));
-  };
-
-  //login with google account
-  const loginWithGoogle = () => {
-    loginUserWithGoogle()
-      .then((result) => {
-        const logedUser = result.user;
-        console.log(logedUser);
-        setFirebaseError("");
       })
       .catch((error) => setFirebaseError(error.message))
       .finally(() => setLoading(false));
@@ -42,7 +27,7 @@ const Login = () => {
   return (
     <div>
       <div className="max-w-sm md:mx-auto p-8 border mx-2 my-6 md:my-48">
-        <h1 className="text-xl ">Login</h1>
+        <h1 className="text-xl ">Reset Password</h1>
         <form onSubmit={handleSubmit(handleForm)}>
           <div className="">
             <div className="form-control">
@@ -56,28 +41,13 @@ const Login = () => {
                 required
               />
             </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                {...register("password")}
-                className="input input-bordered w-full "
-              />
-              <label className="label">
-                <Link to="/reset" className="label-text-alt link link-hover">
-                  Forgot password?
-                </Link>
-              </label>
-            </div>
             {firebaseError && (
               <small className="text-red-500 text-left">{firebaseError}</small>
             )}
             <input
               type="submit"
               className="bg-[#3A4256] mt-5 py-4 text-white w-full rounded-lg cursor-pointer"
-              value="LOGIN"
+              value="RESET"
             />
             <p className="text-xs text-left mt-3">
               New to Doctors Portal?
@@ -85,20 +55,20 @@ const Login = () => {
                 <span className="ml-2 text-[#19D3AE]">Create new account</span>
               </Link>
             </p>
-            <div className="divider">OR</div>
+            <p className="text-xs text-left mt-3">
+              Already have an account?
+              <Link to="/signup" className="link link-hover">
+                <span className="ml-2 text-[#19D3AE]">
+                  Login to your account
+                </span>
+              </Link>
+            </p>
           </div>
         </form>
-        <div>
-          <button
-            onClick={loginWithGoogle}
-            className="border border-[#3A4256] py-4 w-full rounded-lg"
-          >
-            CONTINUE WITH GOOGLE
-          </button>
-        </div>
+        <div></div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Reset;

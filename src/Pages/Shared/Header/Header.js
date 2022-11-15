@@ -67,9 +67,12 @@ const Header = () => {
           </div>
           <div className="">
             {user?.uid ? (
-              <Link to="">
+              <div className="flex gap-4">
                 <button onClick={handleUserLogout}>Logout</button>
-              </Link>
+                <div className="w-8 rounded-full ">
+                  <img src={user?.photoURL} alt="" title="" />
+                </div>
+              </div>
             ) : (
               <Link to="/login">
                 <button>Login</button>

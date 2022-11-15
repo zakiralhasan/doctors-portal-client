@@ -6,19 +6,21 @@ import { Link } from "react-router-dom";
 import { AutheContext } from "../../Context/AuthProvider";
 
 const SignUp = () => {
+  //used for react hook form
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  //used for handle firebase error
   const [firebaseError, setFirebaseError] = useState();
+  //used context api
   const { user, setLoading, createUser, loginUserWithGoogle } =
     useContext(AutheContext);
 
   //create or signup new user
   const handleForm = (data) => {
-    console.log(data);
     createUser(data.email, data.password)
       .then((result) => {
         const newUser = result.user;
@@ -40,6 +42,7 @@ const SignUp = () => {
       .catch((error) => setFirebaseError(error.message))
       .finally(() => setLoading(false));
   };
+
   return (
     <div>
       <div className="max-w-sm md:mx-auto p-8 border mx-2 my-6 md:my-48">

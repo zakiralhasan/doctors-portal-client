@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
   };
 
   //login user with email and password
-  const logingUser = (email, password) => {
+  const loginUser = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  //login user monitoring
+  //login user observer
   useEffect(() => {
     const unsubscribeUser = onAuthStateChanged(auth, (currentUser) => {
       console.log("Inside onAuthStateChanged", currentUser);
@@ -66,7 +66,7 @@ const AuthProvider = ({ children }) => {
     user,
     setLoading,
     createUser,
-    logingUser,
+    loginUser,
     loginUserWithGoogle,
     logOutUser,
     userEmailVerification,
