@@ -15,7 +15,7 @@ const Header = () => {
   const navItems = (
     <>
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/home">Home</Link>
       </li>
       <li>
         <Link>About</Link>
@@ -64,7 +64,9 @@ const Header = () => {
               {navItems}
             </ul>
           </div>
-          <Link className=" normal-case text-xl">Doctors Portal</Link>
+          <Link to="/" className=" normal-case text-xl">
+            Doctors Portal
+          </Link>
         </div>
         <div className="navbar-end">
           <div className="hidden md:flex ">

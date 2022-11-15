@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 
-const PrivetRout = ({ children }) => {
+const PrivetRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
 
@@ -24,4 +24,4 @@ const PrivetRout = ({ children }) => {
   }
 };
 
-export default PrivetRout;
+export default PrivetRoute;
