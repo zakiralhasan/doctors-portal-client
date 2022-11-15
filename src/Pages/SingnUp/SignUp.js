@@ -13,8 +13,10 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const [firebaseError, setFirebaseError] = useState();
-  const { user, createUser } = useContext(AutheContext);
+  const { user, setLoading, createUser, loginUserWithGoogle } =
+    useContext(AutheContext);
 
+  //create or signup new user
   const handleForm = (data) => {
     console.log(data);
     createUser(data.email, data.password)
@@ -27,6 +29,17 @@ const SignUp = () => {
       .catch((error) => setFirebaseError(error.message));
   };
 
+  //login with google account
+  const loginWithGoogle = () => {
+    loginUserWithGoogle()
+      .then((result) => {
+        const logedUser = result.user;
+        console.log(logedUser);
+        setFirebaseError("");
+      })
+      .catch((error) => setFirebaseError(error.message))
+      .finally(() => setLoading(false));
+  };
   return (
     <div>
       <div className="max-w-sm md:mx-auto p-8 border mx-2 my-6 md:my-48">
@@ -91,7 +104,7 @@ const SignUp = () => {
             )}
             <input
               type="submit"
-              className="bg-[#3A4256] mt-5 py-4 text-white w-full rounded-lg "
+              className="bg-[#3A4256] mt-5 py-4 text-white w-full rounded-lg cursor-pointer"
               value="SINGUP"
             />
             <p className="text-xs text-left mt-3">
@@ -106,7 +119,10 @@ const SignUp = () => {
           </div>
         </form>
         <div>
-          <button className="border border-[#3A4256] py-4 w-full rounded-lg">
+          <button
+            onClick={loginWithGoogle}
+            className="border border-[#3A4256] py-4 w-full rounded-lg"
+          >
             CONTINUE WITH GOOGLE
           </button>
         </div>

@@ -6,15 +6,12 @@ import { Link } from "react-router-dom";
 import { AutheContext } from "../../Context/AuthProvider";
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [firebaseError, setFirebaseError] = useState();
-  const { user, logingUser } = useContext(AutheContext);
+  const { user, setLoading, logingUser, loginUserWithGoogle } =
+    useContext(AutheContext);
 
+  //login with email and password
   const handleForm = (data) => {
     console.log(data);
     logingUser(data.email, data.password)
@@ -24,7 +21,20 @@ const Login = () => {
         setFirebaseError("");
         reset();
       })
-      .catch((error) => setFirebaseError(error.message));
+      .catch((error) => setFirebaseError(error.message))
+      .finally(() => setLoading(false));
+  };
+
+  //login with google account
+  const loginWithGoogle = () => {
+    loginUserWithGoogle()
+      .then((result) => {
+        const logedUser = result.user;
+        console.log(logedUser);
+        setFirebaseError("");
+      })
+      .catch((error) => setFirebaseError(error.message))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -54,9 +64,9 @@ const Login = () => {
                 className="input input-bordered w-full "
               />
               <label className="label">
-                <a href="/" className="label-text-alt link link-hover">
+                <Link href="/" className="label-text-alt link link-hover">
                   Forgot password?
-                </a>
+                </Link>
               </label>
             </div>
             {firebaseError && (
@@ -64,7 +74,7 @@ const Login = () => {
             )}
             <input
               type="submit"
-              className="bg-[#3A4256] mt-5 py-4 text-white w-full rounded-lg"
+              className="bg-[#3A4256] mt-5 py-4 text-white w-full rounded-lg cursor-pointer"
               value="LOGIN"
             />
             <p className="text-xs text-left mt-3">
@@ -77,7 +87,10 @@ const Login = () => {
           </div>
         </form>
         <div>
-          <button className="border border-[#3A4256] py-4 w-full rounded-lg">
+          <button
+            onClick={loginWithGoogle}
+            className="border border-[#3A4256] py-4 w-full rounded-lg"
+          >
             CONTINUE WITH GOOGLE
           </button>
         </div>
