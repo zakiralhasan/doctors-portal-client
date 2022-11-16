@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../Context/AuthProvider";
 import { toast } from "react-toastify";
 
-const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
   const { user } = useContext(AuthContext);
   const date = format(selectedDate, "PP");
   const { name, slots } = treatment;
@@ -33,13 +33,16 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.acknowledged) {
           setTreatment(null);
           toast.success("Your appointment has been successfully booked!");
+          refetch()
+        } else {
+          toast.error(data.message);
         }
       });
   };
+
   return (
     <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
