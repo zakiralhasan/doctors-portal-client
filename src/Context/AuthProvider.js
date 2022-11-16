@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import { createContext } from "react";
@@ -37,13 +38,19 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, providerGoogle);
   };
 
+  //take user name, photo URL etc. during registration
+  const updateUserProfile = (profile) => {
+    setLoading(true);
+    return updateProfile(auth.currentUser, profile);
+  };
+
   //logout user
   const logOutUser = () => {
     return signOut(auth);
   };
 
   //user email varify through valid mail
-  const userEmailVerification = (email) => {
+  const userEmailVerification = () => {
     return sendEmailVerification(auth.currentUser);
   };
 
@@ -70,6 +77,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     loginUser,
     loginUserWithGoogle,
+    updateUserProfile,
     logOutUser,
     userEmailVerification,
     resetUserPassword,

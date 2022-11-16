@@ -2,8 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   //used for react hook form
@@ -16,8 +17,8 @@ const SignUp = () => {
   //used for handle firebase error
   const [firebaseError, setFirebaseError] = useState();
   //used context api
-  const { user, setLoading, createUser, loginUserWithGoogle } =
-    useContext(AuthContext);
+  const { user, setLoading, createUser, loginUserWithGoogle, updateUserProfile, userEmailVerification } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   //create or signup new user
   const handleForm = (data) => {
@@ -26,7 +27,11 @@ const SignUp = () => {
         const newUser = result.user;
         console.log(newUser);
         setFirebaseError("");
+        userVerification() //function called for user verification
+        updateUserInfoWithPicture(data.name) //function called for update user profile
         reset();
+        toast('A verification mail has been sent to your mail addres.')
+        navigate('/')
       })
       .catch((error) => setFirebaseError(error.message));
   };
@@ -41,6 +46,20 @@ const SignUp = () => {
       })
       .catch((error) => setFirebaseError(error.message))
       .finally(() => setLoading(false));
+  };
+
+  //update user profile with name
+  const updateUserInfoWithPicture = (name) => {
+    updateUserProfile({ displayName: name })
+      .then(() => { })
+      .catch((error) => setFirebaseError(error.message));
+  };
+
+  //verify user through valid mail
+  const userVerification = () => {
+    userEmailVerification()
+      .then()
+      .catch((error) => setFirebaseError(error.message));
   };
 
   return (
