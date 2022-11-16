@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
+import { FaUserAlt } from "react-icons/fa";
 
 const Header = () => {
   const { user, logOutUser } = useContext(AuthContext);
@@ -41,7 +42,7 @@ const Header = () => {
       <div className="navbar bg-base-100">
         <div className="navbar-start ">
           <div className="dropdown ">
-            <label tabIndex={0} className="btn btn-ghost md:hidden ">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -64,20 +65,23 @@ const Header = () => {
               {navItems}
             </ul>
           </div>
-          <Link to="/" className=" normal-case text-xl">
+          <Link to="/" className=" normal-case text-xl sm:mr-8">
             Doctors Portal
           </Link>
         </div>
         <div className="navbar-end">
-          <div className="hidden md:flex ">
+          <div className="hidden lg:flex ">
             <ul className="menu menu-horizontal p-0">{navItems}</ul>
+          </div>
+          <div className="flex items-center sm:ml-8">
+            <input type="checkbox" className="toggle" />
           </div>
           <div className="">
             {user?.uid ? (
-              <div className="flex items-center ml-8">
+              <div className="flex items-center sm:ml-8">
                 <button
                   onClick={handleUserLogout}
-                  className="btn-ghost px-5 py-2"
+                  className="btn-ghost px-3 sm:px-5 py-2"
                 >
                   Logout
                 </button>
@@ -86,10 +90,13 @@ const Header = () => {
                 </div>
               </div>
             ) : (
-              <div className="ml-8">
+              <div className="flex items-center sm:ml-8">
                 <Link to="/login">
-                  <button className="btn-ghost px-5 py-2">Login</button>
+                  <button className="btn-ghost px-3 sm:px-5 py-2 ">
+                    Login
+                  </button>
                 </Link>
+                <FaUserAlt className="ml-1" />
               </div>
             )}
           </div>

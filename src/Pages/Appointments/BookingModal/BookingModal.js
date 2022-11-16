@@ -1,6 +1,10 @@
 import React from "react";
 import { format } from "date-fns";
+import { useContext } from "react";
+import { AuthContext } from "../../../Context/AuthProvider";
+
 const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
+  const { user } = useContext(AuthContext);
   const date = format(selectedDate, "PP");
   const { name, slots } = treatment;
 
@@ -16,9 +20,9 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
       treatmentName: name,
       appointmentDate: date,
       appointmentTime: appointmentSlot,
-      patientName: fullName,
+      patientName: user?.displayName || fullName,
       patientPhone: phone,
-      patientEmail: email,
+      patientEmail: user?.email || email,
     };
     console.log(booking);
     setTreatment(null);
@@ -55,6 +59,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
               <input
                 type="text"
                 name="fullName"
+                defaultValue={user?.displayName}
                 placeholder="Full Name"
                 className="input input-bordered w-full"
               />
@@ -67,6 +72,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
               <input
                 type="email"
                 name="email"
+                defaultValue={user?.email}
                 placeholder="Email"
                 className="input input-bordered w-full"
               />
