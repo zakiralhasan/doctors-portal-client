@@ -2,6 +2,7 @@ import React from "react";
 import { format } from "date-fns";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context/AuthProvider";
+import { toast } from "react-toastify";
 
 const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
   const { user } = useContext(AuthContext);
@@ -16,16 +17,28 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
     const phone = form.phone.value;
     const email = form.email.value;
 
-    const booking = {
+    const bookingData = {
       treatmentName: name,
-      appointmentDate: date,
-      appointmentTime: appointmentSlot,
+      selectedDate: date,
+      selectedTime: appointmentSlot,
       patientName: user?.displayName || fullName,
       patientPhone: phone,
       patientEmail: user?.email || email,
     };
-    console.log(booking);
-    setTreatment(null);
+
+    fetch(`http://localhost:5000/bookings`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(bookingData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          setTreatment(null);
+          toast.success("Your appointment has been successfully booked!");
+        }
+      });
   };
   return (
     <>
