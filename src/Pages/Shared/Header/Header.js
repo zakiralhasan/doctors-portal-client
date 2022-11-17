@@ -3,13 +3,13 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
 import { FaUserAlt } from "react-icons/fa";
-
+import { GiHamburgerMenu } from "react-icons/gi";
 const Header = () => {
   const { user, logOutUser } = useContext(AuthContext);
 
   const handleUserLogout = () => {
     logOutUser()
-      .then(() => {})
+      .then(() => { })
       .catch((error) => console.error(error));
   };
 
@@ -43,20 +43,7 @@ const Header = () => {
         <div className="navbar-start ">
           <div className="dropdown ">
             <label tabIndex={0} className="btn btn-ghost lg:hidden ">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
+              <GiHamburgerMenu className="text-xl" />
             </label>
             <ul
               tabIndex={0}
@@ -65,7 +52,7 @@ const Header = () => {
               {navItems}
             </ul>
           </div>
-          <Link to="/" className=" normal-case text-xl sm:mr-8">
+          <Link to="/" className=" normal-case text-xl sm:mr-4">
             Doctors Portal
           </Link>
         </div>
@@ -86,7 +73,8 @@ const Header = () => {
                   Logout
                 </button>
                 <div className="w-8 rounded-full ml-2">
-                  <img src={user?.photoURL} alt="" title="" />
+                  <label htmlFor="dashboard-drawer" className="drawer-button lg:hidden"><img className="rounded-full" src={user?.photoURL} alt="" /></label>
+                  <img className="rounded-full lg:block hidden" src={user?.photoURL} alt="" title="" />
                 </div>
               </div>
             ) : (
