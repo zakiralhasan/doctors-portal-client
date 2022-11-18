@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import { toast } from "react-toastify";
+import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
   //used for react hook form
@@ -19,6 +20,12 @@ const SignUp = () => {
   //used context api
   const { user, setLoading, createUser, loginUserWithGoogle, updateUserProfile, userEmailVerification } = useContext(AuthContext);
   const navigate = useNavigate()
+
+  //this useState work for stor new user's email
+  const [newUserEmail, setNewUserEmail] = useState('');
+
+  //custom hooks call for creating jwt
+  const [token] = useToken(newUserEmail)
 
   //create or signup new user
   const handleForm = (data) => {
@@ -66,20 +73,13 @@ const SignUp = () => {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        getUserToken(email)
+        setNewUserEmail(email); // set data to setNewUserEmail() useState
       })
   }
 
-  //get user access token from backend
-  const getUserToken = (email) => {
-    fetch(`http://localhost:5000/jwt?email=${email}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.accessToken) {
-          localStorage.setItem('accessToken', data.accessToken)
-          navigate('/')
-        }
-      })
+  //send new user to home page after successfully signup
+  if (token) {
+    navigate('/')
   }
 
   //verify user through valid mail

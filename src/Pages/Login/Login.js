@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
+import useToken from "../../hooks/useToken";
 
 const Login = () => {
   //used for react hook form
@@ -13,6 +14,12 @@ const Login = () => {
   //used context api
   const { user, setLoading, loginUser, loginUserWithGoogle } =
     useContext(AuthContext);
+
+  //this useState work for stor login user's email
+  const [loginUserEmail, setloginUserEmail] = useState('');
+
+  //custom hooks call for creating jwt
+  const [token] = useToken(loginUserEmail)
 
   //used for login user redirect path issue
   const navigate = useNavigate();
@@ -25,7 +32,7 @@ const Login = () => {
       .then((result) => {
         const logedUser = result.user;
         console.log(logedUser);
-        navigate(from, { replace: true }); //used for login user redirect path
+        setloginUserEmail(data.email)
         setFirebaseError("");
         reset();
       })
@@ -44,6 +51,11 @@ const Login = () => {
       .catch((error) => setFirebaseError(error.message))
       .finally(() => setLoading(false));
   };
+
+  //send login user expected page after successfull signup
+  if (token) {
+    navigate(from, { replace: true }); //used for login user redirect path
+  }
 
   return (
     <div>
