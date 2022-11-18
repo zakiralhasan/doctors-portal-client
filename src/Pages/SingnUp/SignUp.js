@@ -31,7 +31,7 @@ const SignUp = () => {
         updateUserInfoWithPicture(data.name) //function called for update user profile
         reset();
         toast('A verification mail has been sent to your mail addres.')
-        navigate('/')
+        userInformation(data.name, data.email) //store user information at mongoDB
       })
       .catch((error) => setFirebaseError(error.message));
   };
@@ -54,6 +54,21 @@ const SignUp = () => {
       .then(() => { })
       .catch((error) => setFirebaseError(error.message));
   };
+
+  //get user information from signup form and stored mongoDB server
+  const userInformation = (name, email) => {
+    const userInfo = { name, email };
+    fetch('http://localhost:5000/users', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        navigate('/')
+      })
+  }
 
   //verify user through valid mail
   const userVerification = () => {

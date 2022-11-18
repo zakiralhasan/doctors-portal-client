@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import Dashboard from '../Pages/Dashboard/Dashboard';
 import Header from '../Pages/Shared/Header/Header';
 
 const DashboardLayout = () => {
     return (
-        <div className="max-w-[1440px] mx-auto">
+        <div className="max-w-[1440px] mx-auto ">
             <Header></Header>
-            <div className="drawer drawer-mobile">
+            <div className="bg-[#F1F5F9] drawer drawer-mobile">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
                     <Outlet></Outlet>
