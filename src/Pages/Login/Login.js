@@ -12,8 +12,7 @@ const Login = () => {
   //used for handle firebase error
   const [firebaseError, setFirebaseError] = useState();
   //used context api
-  const { user, setLoading, loginUser, loginUserWithGoogle } =
-    useContext(AuthContext);
+  const { setLoading, loginUser, loginUserWithGoogle } = useContext(AuthContext);
 
   //this useState work for stor login user's email
   const [loginUserEmail, setloginUserEmail] = useState('');
@@ -32,7 +31,7 @@ const Login = () => {
       .then((result) => {
         const logedUser = result.user;
         console.log(logedUser);
-        setloginUserEmail(data.email)
+        setloginUserEmail(data?.email)
         setFirebaseError("");
         reset();
       })
