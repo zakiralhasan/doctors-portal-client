@@ -1,14 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const AddNewDoctor = () => {
     const { register, handleSubmit, reset, formState: { errors }, } = useForm();
     //used for handle firebase error
     const [firebaseError, setFirebaseError] = useState();
-
+    //get image hosting site's api key
     const imgHostKey = process.env.REACT_APP_imgbb_key;
+
+    const navigate = useNavigate()
 
     const { data: specialties, refetch } = useQuery({
         queryKey: ['appointmentSpecialty'],
@@ -19,7 +22,6 @@ const AddNewDoctor = () => {
 
 
     const handleForm = (data) => {
-        console.log(data.name, data.email, data.specialty, data.img);
         const image = data.img[0]
         const formData = new FormData();
         formData.append('image', image)
@@ -30,7 +32,6 @@ const AddNewDoctor = () => {
         })
             .then(res => res.json())
             .then(imgData => {
-                console.log(imgData)
                 if (imgData.success) {
                     console.log(imgData.data.url)
                     const doctorInfo = {
@@ -51,8 +52,10 @@ const AddNewDoctor = () => {
                     })
                         .then(res => res.json())
                         .then(doctorData => {
-                            console.log(doctorData)
-                            toast.success('Doctor added successfully!')
+                            if (doctorData.acknowledged) {
+                                toast.success('Doctor added successfully!')
+                                navigate('/dashboard/manageDoctors')
+                            }
                         })
                 }
             })

@@ -1,8 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import ConfirmationModal from '../../Shared/ConfirmationModal/ConfirmationModal';
 
 
 const ManageDoctors = () => {
+    const [deleteDocotr, setDeleteDoctor] = useState(null)
 
     const { data: doctors = [], refetch } = useQuery({
         queryKey: ['doctors'],
@@ -15,6 +19,27 @@ const ManageDoctors = () => {
                 .then(res => res.json())
     });
 
+    //handle delete doctor through confirmation modal
+    const handleDeleteDocotr = (doctor) => {
+        fetch(`http://localhost:5000/doctors/${doctor._id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    toast.success('Selected doctor has been successfully deleted!')
+                    refetch()
+                }
+            })
+    }
+
+    //close modal
+    const closeModal = () => {
+        setDeleteDoctor(null)
+    }
 
     return (
         <div className='mx-5 lg:mx-14 '>
@@ -46,12 +71,22 @@ const ManageDoctors = () => {
                             </td>
                             <td>{doctor.doctorName}</td>
                             <td>{doctor.doctorSpecialty}</td>
-                            <td><button className='btn btn-xs btn-error'>Delete</button></td>
+                            <td>
+                                <label onClick={() => setDeleteDoctor(doctor)} htmlFor="confirmation-modal" className="btn btn-xs btn-error">Delete</label>
+                            </td>
                         </tr>)}
                     </tbody>
                 </table>
             </div>
-
+            {deleteDocotr &&
+                <ConfirmationModal
+                    title={`Are you sure to delete doctor ${deleteDocotr.doctorName}?`}
+                    message={'If you delete this, you will never get it back!'}
+                    closeModal={closeModal}
+                    successeAction={handleDeleteDocotr}
+                    modalData={deleteDocotr}
+                ></ConfirmationModal>
+            }
         </div>
     );
 };
