@@ -9,16 +9,11 @@ import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
   //used for react hook form
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, reset, formState: { errors }, } = useForm();
   //used for handle firebase error
   const [firebaseError, setFirebaseError] = useState();
   //used context api
-  const { user, setLoading, createUser, loginUserWithGoogle, updateUserProfile, userEmailVerification } = useContext(AuthContext);
+  const { setLoading, createUser, loginUserWithGoogle, updateUserProfile, userEmailVerification } = useContext(AuthContext);
   const navigate = useNavigate()
 
   //this useState work for stor new user's email
