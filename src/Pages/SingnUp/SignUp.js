@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import { toast } from "react-toastify";
 import useToken from "../../hooks/useToken";
+import { useEffect } from "react";
 
 const SignUp = () => {
   //used for react hook form
@@ -67,15 +68,18 @@ const SignUp = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        setNewUserEmail(email); // set data to setNewUserEmail() useState
+        if (data.acknowledged) {
+          setNewUserEmail(email); // set data to setNewUserEmail() useState
+        }
       })
   }
 
   //send new user to home page after successfully signup
-  if (token) {
-    navigate('/')
-  }
+  useEffect(() => {
+    if (token) {
+      navigate('/')
+    }
+  }, [token, navigate])
 
   //verify user through valid mail
   const userVerification = () => {

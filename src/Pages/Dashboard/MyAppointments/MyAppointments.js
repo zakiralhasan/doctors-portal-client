@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../Context/AuthProvider';
+import Loading from '../../../UtilityComponents/StartButton/Loading';
 
 const MyAppointments = () => {
     const { user } = useContext(AuthContext);
-    const { data: bookings = [] } = useQuery({
+    const { data: bookings = [], isLoading } = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: () =>
             fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
@@ -15,7 +16,9 @@ const MyAppointments = () => {
             })
                 .then(res => res.json())
     });
-
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div className='mx-5 lg:mx-14 '>
             <div className='text-2xl text-left mt-14 mb-6'>

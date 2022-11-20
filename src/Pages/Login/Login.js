@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -51,10 +52,12 @@ const Login = () => {
       .finally(() => setLoading(false));
   };
 
-  //send login user expected page after successfull signup
-  if (token) {
-    navigate(from, { replace: true }); //used for login user redirect path
-  }
+  //send login user expected page after successfull login
+  useEffect(() => {
+    if (token) {
+      navigate(from, { replace: true }); //used for login user redirect path
+    }
+  }, [token, navigate, from])
 
   return (
     <div>
