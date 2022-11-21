@@ -5,7 +5,7 @@ import { AuthContext } from "../../../Context/AuthProvider";
 import { FaUserAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 const Header = () => {
-  const { user, logOutUser } = useContext(AuthContext);
+  const { user, logOutUser, theme, setTheme } = useContext(AuthContext);
 
   const handleUserLogout = () => {
     logOutUser()
@@ -61,7 +61,7 @@ const Header = () => {
             <ul className="menu menu-horizontal p-0">{navItems}</ul>
           </div>
           <div className="flex items-center sm:ml-8">
-            <input type="checkbox" className="toggle" />
+            <input onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} type="checkbox" className="toggle" />
           </div>
           <div className="">
             {user?.uid ? (

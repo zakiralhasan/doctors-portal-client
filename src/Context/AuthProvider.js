@@ -19,8 +19,9 @@ import { useEffect } from "react";
 export const AuthContext = createContext();
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
-  const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState('light'); //used for theme change
+  const [user, setUser] = useState(); //used for store logged user's information
+  const [loading, setLoading] = useState(true); //used for loading state
   const providerGoogle = new GoogleAuthProvider();
 
   //create new user
@@ -70,6 +71,8 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const authInfo = {
+    theme,
+    setTheme,
     user,
     setUser,
     loading,
