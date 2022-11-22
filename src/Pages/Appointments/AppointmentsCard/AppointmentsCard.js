@@ -1,7 +1,7 @@
 import React from "react";
 
 const AppointmentsCard = ({ appointmentOption, setTreatment }) => {
-  const { name, slots } = appointmentOption;
+  const { name, slots, price } = appointmentOption;
   return (
     <div>
       <div className="py-10 border rounded-xl shadow-md ">
@@ -13,6 +13,7 @@ const AppointmentsCard = ({ appointmentOption, setTreatment }) => {
           <p className="mt-2 text-xs">
             {slots.length} {slots.length > 1 ? "Spaces" : "Space"} available
           </p>
+          <small>Price: ${price}</small>
         </div>
         {/* this label is used for modal open */}
         <label

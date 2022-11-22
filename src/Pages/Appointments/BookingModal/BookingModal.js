@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
   const { user } = useContext(AuthContext);
   const date = format(selectedDate, "PP");
-  const { name, slots } = treatment;
+  const { name, slots, price } = treatment;
 
   const handleForm = (event) => {
     event.preventDefault();
@@ -24,6 +24,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
       patientName: user?.displayName || fullName,
       patientPhone: phone,
       patientEmail: user?.email || email,
+      price
     };
 
     fetch(`http://localhost:5000/bookings`, {
