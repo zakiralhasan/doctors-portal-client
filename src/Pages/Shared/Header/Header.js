@@ -9,7 +9,9 @@ const Header = () => {
 
   const handleUserLogout = () => {
     logOutUser()
-      .then(() => { })
+      .then(() => {
+        localStorage.removeItem('accessToken')//delete the stored token after user logout
+      })
       .catch((error) => console.error(error));
   };
 
